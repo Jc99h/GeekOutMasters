@@ -2,6 +2,8 @@ package GeekOutMasters;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * This class is used for ...
@@ -10,8 +12,22 @@ import java.awt.*;
  */
 public class GUI extends JFrame {
 
+	private static final String MENSAJE_INICIO= "El objetivo de este juego es conseguir la mayor cantidad\n"+
+																							"de puntos juntando dados cuya cara visible es la cara 42.\n"+
+																							"Geek Out Masters no es solo suerte, también importa la\n"+
+																							"estrategia ya que una vez que se lanzan los dados TODAS las\n"+
+																							"caras deberán ejecutarse:\n"+
+																							"1) Los Meeples permiten relanzar un dado activo\n"+
+																							"2) Las Naves Espaciales pasan un dado al area de inactivos\n"+
+																							"3) Los Dragones causaran la perdida del juego si no hay mas acciones disponibles\n"+
+																							"4) Los Superhéroes dan vuelta un dado\n"+
+																							"5) Los Corazones nos permitiran lanzar un dado del area inactivos\n"+
+																							"6) Los 42 nos permiten ganar puntos\n"+
+																							"El juego está compuesto por: 10 dados de Geek Out\n"+
+																							"1 ayuda memoria, 1 Tarjeta de puntuación.";
+
 	private Header headerProject;
-	private JLabel dado1, dado2, dado3, dado4, dado5, dado6, dado7, dado8, dado9, dado10;
+	private JLabel dado1, dado2, dado3, dado4, dado5, dado6, dado7, dado8, dado9, dado10, marcadorDePuntaje;
   private JButton ayuda, salir;
 	private JPanel panelDadosInactivos, panelDadosUtilizados, panelDadosActivos, panelMarcadorDePuntaje;
 	private ImageIcon imagenDado, imagenMarcadorDePuntaje;
@@ -53,13 +69,14 @@ public class GUI extends JFrame {
 		this.add(headerProject,constraints);
 
 		ayuda = new JButton("?");
-		//ayuda.addActionListener(escucha);
+		ayuda.addActionListener(escucha);
 		constraints.gridx=0;
 		constraints.gridy=1;
 		constraints.gridwidth=1;
 		constraints.fill=GridBagConstraints.NONE;
 		constraints.anchor=GridBagConstraints.LINE_START;
 		this.add(ayuda, constraints);
+
 
 		numeroRonda = new JTextArea(1, 10);
 		numeroRonda.setBorder(BorderFactory.createTitledBorder("Ronda:"));
@@ -86,7 +103,7 @@ public class GUI extends JFrame {
 		this.add(numeroPuntaje, constraints);
 
 		salir = new JButton("Salir");
-		//ayuda.addActionListener(escucha);
+		salir.addActionListener(escucha);
 		constraints.gridx=3;
 		constraints.gridy=1;
 		constraints.gridwidth=1;
@@ -130,7 +147,9 @@ public class GUI extends JFrame {
 		panelMarcadorDePuntaje = new JPanel();
 		panelMarcadorDePuntaje.setPreferredSize(new Dimension(250,200));
 		panelMarcadorDePuntaje.setBorder(BorderFactory.createTitledBorder("Marcador de Puntaje"));
-		//panelDadosUtilizados.add(cartaMaquina);
+		imagenMarcadorDePuntaje = new ImageIcon(getClass().getResource("/resources/puntaje.png"));
+		marcadorDePuntaje = new JLabel(imagenMarcadorDePuntaje);
+		panelMarcadorDePuntaje.add(marcadorDePuntaje);
 		constraints.gridx=2;
 		constraints.gridy=3;
 		constraints.gridwidth=2;
@@ -166,8 +185,19 @@ public class GUI extends JFrame {
 	/**
 	 * inner class that extends an Adapter Class or implements Listeners used by GUI class
 	 */
-	private class Escucha
+	private class Escucha implements ActionListener
 	{
-
+		@Override
+		public void actionPerformed(ActionEvent objectEvent)
+		{
+		  if(objectEvent.getSource()==ayuda)
+			{
+				JOptionPane.showMessageDialog(null, MENSAJE_INICIO);
+			}
+			if(objectEvent.getSource()==salir)
+			{
+				System.exit(0);
+			}
+		}
 	}
 }
