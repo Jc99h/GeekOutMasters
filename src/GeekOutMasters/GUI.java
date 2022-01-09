@@ -27,12 +27,13 @@ public class GUI extends JFrame {
 																							"1 ayuda memoria, 1 Tarjeta de puntuación.";
 
 	private Header headerProject;
-	private JLabel dado1, dado2, dado3, dado4, dado5, dado6, dado7, dado8, dado9, dado10, marcadorDePuntaje;
-  private JButton ayuda, salir;
+	private JLabel  dado0, dado1, dado2, dado3, dado4, dado5, dado6, dado7, dado8, dado9, marcadorDePuntaje;
+  private JButton ayuda, salir, jugar;
 	private JPanel panelDadosInactivos, panelDadosUtilizados, panelDadosActivos, panelMarcadorDePuntaje;
 	private ImageIcon imagenDado, imagenMarcadorDePuntaje;
 	private JTextArea mensaje, numeroRonda, numeroPuntaje;
 	private Escucha escucha;
+	private ModelGeekOutMasters modelGeekOutMasters;
 
 	/**
 	 * Constructor of GUI class
@@ -60,6 +61,7 @@ public class GUI extends JFrame {
 
 		//Create Listener Object and Control Object
 		escucha = new Escucha();
+		modelGeekOutMasters = new ModelGeekOutMasters();
 		//Set up JComponents
 		headerProject = new Header("Mesa Juego Geek Out Masters", Color.BLACK);
 		constraints.gridx=0;
@@ -82,7 +84,6 @@ public class GUI extends JFrame {
 		numeroRonda.setBorder(BorderFactory.createTitledBorder("Ronda:"));
 		numeroRonda.setText("#1");
 		numeroRonda.setEditable(false);
-		//ayuda.addActionListener(escucha);
 		constraints.gridx=1;
 		constraints.gridy=1;
 		constraints.gridwidth=1;
@@ -94,7 +95,6 @@ public class GUI extends JFrame {
 		numeroPuntaje.setBorder(BorderFactory.createTitledBorder("Puntaje:"));
 		numeroPuntaje.setText("0 puntos");
 		numeroPuntaje.setEditable(false);
-		//ayuda.addActionListener(escucha);
 		constraints.gridx=2;
 		constraints.gridy=1;
 		constraints.gridwidth=1;
@@ -114,7 +114,6 @@ public class GUI extends JFrame {
 		panelDadosInactivos = new JPanel();
 		panelDadosInactivos.setPreferredSize(new Dimension(250,200));
 		panelDadosInactivos.setBorder(BorderFactory.createTitledBorder("Dados Inactivos"));
-		//panelDadosInactivos.add(cartaMaquina);
 		constraints.gridx=0;
 		constraints.gridy=2;
 		constraints.gridwidth=2;
@@ -136,7 +135,8 @@ public class GUI extends JFrame {
 		panelDadosActivos = new JPanel();
 		panelDadosActivos.setPreferredSize(new Dimension(250,200));
 		panelDadosActivos.setBorder(BorderFactory.createTitledBorder("Dados Activos"));
-		//panelDadosUtilizados.add(cartaMaquina);
+		dado0 = new JLabel();
+		panelDadosActivos.add(dado0);
 		constraints.gridx=0;
 		constraints.gridy=3;
 		constraints.gridwidth=2;
@@ -169,6 +169,15 @@ public class GUI extends JFrame {
 		constraints.anchor=GridBagConstraints.CENTER;
 		this.add(mensaje, constraints);
 
+		jugar = new JButton("Presione para jugar");
+		jugar.addActionListener(escucha);
+		constraints.gridx=0;
+		constraints.gridy=5;
+		constraints.gridwidth=4;
+		constraints.fill=GridBagConstraints.HORIZONTAL;
+		constraints.anchor=GridBagConstraints.CENTER;
+		this.add(jugar, constraints);
+
 	}
 
 	/**
@@ -197,6 +206,16 @@ public class GUI extends JFrame {
 			if(objectEvent.getSource()==salir)
 			{
 				System.exit(0);
+			}
+			if(objectEvent.getSource()==jugar)
+			{
+				modelGeekOutMasters.lanzarDado();
+				String caras[] = modelGeekOutMasters.getCaras();
+				for(int cual=0; cual<10; cual++)
+				{
+					imagenDado = new ImageIcon(getClass().getResource("/resources/42.jpg"));
+					dado0.setIcon(imagenDado);
+				}
 			}
 		}
 	}
