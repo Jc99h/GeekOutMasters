@@ -32,16 +32,16 @@ public class ModelGeekOutMasters {
 	 */
 	public void lanzarDado()
 	{
-		caras[0] = dado1.getCara();
-		caras[1] = dado2.getCara();
-		caras[2] = dado1.getCara();
-		caras[3] = dado2.getCara();
-		caras[4] = dado1.getCara();
-		caras[5] = dado2.getCara();
-		caras[6] = dado1.getCara();
-		caras[7] = dado2.getCara();
-		caras[8] = dado1.getCara();
-		caras[9] = dado2.getCara();
+		caras[0] = dado0.getCara();
+		caras[1] = dado1.getCara();
+		caras[2] = dado2.getCara();
+		caras[3] = dado3.getCara();
+		caras[4] = dado4.getCara();
+		caras[5] = dado5.getCara();
+		caras[6] = dado6.getCara();
+		caras[7] = dado7.getCara();
+		caras[8] = dado8.getCara();
+		caras[9] = dado9.getCara();
 	}
 
 	public String[] getCaras()

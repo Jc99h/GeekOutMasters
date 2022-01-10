@@ -62,6 +62,59 @@ public class GUI extends JFrame {
 		//Create Listener Object and Control Object
 		escucha = new Escucha();
 		modelGeekOutMasters = new ModelGeekOutMasters();
+
+		//Se crean los dados iniciales
+		dado0 = new JLabel();
+		dado1 = new JLabel();
+		dado2 = new JLabel();
+		dado3 = new JLabel();
+		dado4 = new JLabel();
+		dado5 = new JLabel();
+		dado6 = new JLabel();
+		dado7 = new JLabel();
+		dado8 = new JLabel();
+		dado9 = new JLabel();
+		modelGeekOutMasters.lanzarDado();
+		String caras[] = modelGeekOutMasters.getCaras();
+		for(int cual=0; cual<10; cual++)
+		{
+			imagenDado = new ImageIcon(getClass().getResource("/resources/"+caras[cual]+".jpg"));
+			switch(cual)
+			{
+				case 0:
+								dado0.setIcon(imagenDado);
+								break;
+				case 1:
+								dado1.setIcon(imagenDado);
+								break;
+				case 2:
+								dado2.setIcon(imagenDado);
+								break;
+				case 3:
+								dado3.setIcon(imagenDado);
+								break;
+				case 4:
+								dado4.setIcon(imagenDado);
+								break;
+				case 5:
+								dado5.setIcon(imagenDado);
+								break;
+				case 6:
+								dado6.setIcon(imagenDado);
+								break;
+				case 7:
+								dado7.setIcon(imagenDado);
+								break;
+				case 8:
+								dado8.setIcon(imagenDado);
+								break;
+				case 9:
+								dado9.setIcon(imagenDado);
+								break;
+			}
+		}
+
+
 		//Set up JComponents
 		headerProject = new Header("Mesa Juego Geek Out Masters", Color.BLACK);
 		constraints.gridx=0;
@@ -114,6 +167,9 @@ public class GUI extends JFrame {
 		panelDadosInactivos = new JPanel();
 		panelDadosInactivos.setPreferredSize(new Dimension(250,200));
 		panelDadosInactivos.setBorder(BorderFactory.createTitledBorder("Dados Inactivos"));
+		panelDadosInactivos.add(dado7);
+		panelDadosInactivos.add(dado8);
+		panelDadosInactivos.add(dado9);
 		constraints.gridx=0;
 		constraints.gridy=2;
 		constraints.gridwidth=2;
@@ -135,8 +191,13 @@ public class GUI extends JFrame {
 		panelDadosActivos = new JPanel();
 		panelDadosActivos.setPreferredSize(new Dimension(250,200));
 		panelDadosActivos.setBorder(BorderFactory.createTitledBorder("Dados Activos"));
-		dado0 = new JLabel();
 		panelDadosActivos.add(dado0);
+		panelDadosActivos.add(dado1);
+		panelDadosActivos.add(dado2);
+		panelDadosActivos.add(dado3);
+		panelDadosActivos.add(dado4);
+		panelDadosActivos.add(dado5);
+		panelDadosActivos.add(dado6);
 		constraints.gridx=0;
 		constraints.gridy=3;
 		constraints.gridwidth=2;
@@ -169,15 +230,6 @@ public class GUI extends JFrame {
 		constraints.anchor=GridBagConstraints.CENTER;
 		this.add(mensaje, constraints);
 
-		jugar = new JButton("Presione para jugar");
-		jugar.addActionListener(escucha);
-		constraints.gridx=0;
-		constraints.gridy=5;
-		constraints.gridwidth=4;
-		constraints.fill=GridBagConstraints.HORIZONTAL;
-		constraints.anchor=GridBagConstraints.CENTER;
-		this.add(jugar, constraints);
-
 	}
 
 	/**
@@ -206,16 +258,6 @@ public class GUI extends JFrame {
 			if(objectEvent.getSource()==salir)
 			{
 				System.exit(0);
-			}
-			if(objectEvent.getSource()==jugar)
-			{
-				modelGeekOutMasters.lanzarDado();
-				String caras[] = modelGeekOutMasters.getCaras();
-				for(int cual=0; cual<10; cual++)
-				{
-					imagenDado = new ImageIcon(getClass().getResource("/resources/42.jpg"));
-					dado0.setIcon(imagenDado);
-				}
 			}
 		}
 	}
