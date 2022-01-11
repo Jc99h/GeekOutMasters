@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * This class is used for ...
@@ -74,7 +76,20 @@ public class GUI extends JFrame {
 		dado7 = new JLabel();
 		dado8 = new JLabel();
 		dado9 = new JLabel();
+
+		dado0.addMouseListener(escucha);
+		dado1.addMouseListener(escucha);
+		dado2.addMouseListener(escucha);
+		dado3.addMouseListener(escucha);
+		dado4.addMouseListener(escucha);
+		dado5.addMouseListener(escucha);
+		dado6.addMouseListener(escucha);
+		dado7.addMouseListener(escucha);
+		dado8.addMouseListener(escucha);
+		dado9.addMouseListener(escucha);
+
 		modelGeekOutMasters.lanzarDado();
+		Dado dados[] = modelGeekOutMasters.getListaDados();
 		String caras[] = modelGeekOutMasters.getCaras();
 		for(int cual=0; cual<10; cual++)
 		{
@@ -180,7 +195,6 @@ public class GUI extends JFrame {
 		panelDadosUtilizados = new JPanel();
 		panelDadosUtilizados.setPreferredSize(new Dimension(250,200));
 		panelDadosUtilizados.setBorder(BorderFactory.createTitledBorder("Dados Utilizados"));
-		//panelDadosUtilizados.add(cartaMaquina);
 		constraints.gridx=2;
 		constraints.gridy=2;
 		constraints.gridwidth=2;
@@ -220,9 +234,11 @@ public class GUI extends JFrame {
 
 		mensaje = new JTextArea(5, 20);
 		mensaje.setBorder(BorderFactory.createTitledBorder("Mensajes:"));
-		mensaje.setText("0 puntos");
+		mensaje.setText("Empieza el juego, intenta terminar cada ronda con dados 42.\n"+
+											"Recuerda que debes activar todos los dados del panel de dados activos\n"+
+											"Buena suerte!\n"+
+											"Si necesitas ayuda da click en el boton '?'.");
 		mensaje.setEditable(false);
-		//ayuda.addActionListener(escucha);
 		constraints.gridx=0;
 		constraints.gridy=4;
 		constraints.gridwidth=4;
@@ -246,7 +262,7 @@ public class GUI extends JFrame {
 	/**
 	 * inner class that extends an Adapter Class or implements Listeners used by GUI class
 	 */
-	private class Escucha implements ActionListener
+	private class Escucha implements ActionListener, MouseListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent objectEvent)
@@ -259,6 +275,57 @@ public class GUI extends JFrame {
 			{
 				System.exit(0);
 			}
+			revalidate();
+			repaint();
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent objectEvent)
+		{
+			if(modelGeekOutMasters.getFlag()==0)
+			{
+				if(objectEvent.getSource()==dado1)
+				{
+					modelGeekOutMasters.getCaras()[1] = modelGeekOutMasters.relanzarDado(modelGeekOutMasters.getListaDados()[1], 1);
+					imagenDado = new ImageIcon(getClass().getResource("/resources/"+modelGeekOutMasters.getCaras()[1]+".jpg"));
+					dado1.setIcon(imagenDado);
+					mensaje.setText("Continua...");
+					modelGeekOutMasters.setFlag(5);
+				}
+			}
+			if(objectEvent.getSource()==dado0)
+			{
+				panelDadosUtilizados.add(dado0);
+				modelGeekOutMasters.dadoClickeado(modelGeekOutMasters.getCaras()[0]);
+				modelGeekOutMasters.determinarJuego();
+				mensaje.setText(modelGeekOutMasters.getEstadoToString());
+				revalidate();
+				repaint();
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent objectEvent)
+		{
+			//
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent objectEvent)
+		{
+			//
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent objectEvent)
+		{
+			//
+		}
+
+		@Override
+		public void mouseExited(MouseEvent objectEvent)
+		{
+			//
 		}
 	}
 }
