@@ -6,25 +6,30 @@ package GeekOutMasters;
  */
 
 public class ModelGeekOutMasters {
-	private Dado dado0, dado1, dado2, dado3, dado4, dado5, dado6, dado7, dado8, dado9;
+	private Dado[] dados;
 	private String[] caras;
+	private String estadoToString;
+	private int flag, estado;
 
 	/**
 	 * Class constructor
 	 */
 	public ModelGeekOutMasters()
 	{
-		dado0 = new Dado();
-		dado1 = new Dado();
-		dado2 = new Dado();
-		dado3 = new Dado();
-		dado4 = new Dado();
-		dado5 = new Dado();
-		dado6 = new Dado();
-		dado7 = new Dado();
-		dado8 = new Dado();
-		dado9 = new Dado();
+		dados = new Dado[10];
+		dados[0]= new Dado();
+		dados[1]= new Dado();
+		dados[2]= new Dado();
+		dados[3]= new Dado();
+		dados[4]= new Dado();
+		dados[5]= new Dado();
+		dados[6]= new Dado();
+		dados[7]= new Dado();
+		dados[8]= new Dado();
+		dados[9]= new Dado();
 		caras = new String[10];
+		flag=5;
+		estado=5;
 	}
 
 	/**
@@ -32,21 +37,88 @@ public class ModelGeekOutMasters {
 	 */
 	public void lanzarDado()
 	{
-		caras[0] = dado0.getCara();
-		caras[1] = dado1.getCara();
-		caras[2] = dado2.getCara();
-		caras[3] = dado3.getCara();
-		caras[4] = dado4.getCara();
-		caras[5] = dado5.getCara();
-		caras[6] = dado6.getCara();
-		caras[7] = dado7.getCara();
-		caras[8] = dado8.getCara();
-		caras[9] = dado9.getCara();
+		for(int cual=0; cual<10; cual++)
+		{
+			caras[cual] = dados[cual].getCara();
+		}
+		caras[0] = "meeple";
 	}
+
+	/**
+	 * Retorna el valor de las caras de los dados
+	 * @return caras
+	 */
 
 	public String[] getCaras()
 	{
 		return caras;
+	}
+
+	/**
+	 * Retorna la lista de dados
+	 * @return dados
+	 */
+	public Dado[] getListaDados()
+	{
+		return dados;
+	}
+
+	/**
+	 * Retorna el valor de flag
+	 * @return flag
+	 */
+	public int getFlag()
+	{
+		return flag;
+	}
+
+	public void setFlag(int numero)
+	{
+		flag = numero;
+	}
+
+	/**
+	 * Determina el estado del juego
+	 * 1. Estado Meeple, le indica al jugador que relance un dado del los dados activos
+	 */
+	public void determinarJuego()
+	{
+		if(flag==0)
+		{
+			estado=0;
+		}
+	}
+
+	/**
+	 * Determina la cara del dado clickeado
+	 */
+	public void dadoClickeado(String cara)
+	{
+		if(cara=="meeple")
+		{
+			flag=0;
+		}
+	}
+
+	public String relanzarDado(Dado dado, int cual)
+	{
+		caras[cual] = dado.getCara();
+		return caras[cual];
+	}
+
+	/**
+	 * Establece un mensaje acorde al estado del juego
+	 * @return estadoToString
+	 */
+	public String getEstadoToString()
+	{
+		switch (estado)
+		{
+			case 0:
+							estadoToString = "Seleccionaste Meeple, ahora puedes volver a lanzar uno de los dados activos";
+							break;
+		}
+		return estadoToString;
 	}
 }
 
