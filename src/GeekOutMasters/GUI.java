@@ -89,11 +89,9 @@ public class GUI extends JFrame {
 		dado9.addMouseListener(escucha);
 
 		modelGeekOutMasters.lanzarDado();
-		Dado dados[] = modelGeekOutMasters.getListaDados();
-		String caras[] = modelGeekOutMasters.getCaras();
-		for(int cual=0; cual<10; cual++)
+		for(int cual=0; cual<modelGeekOutMasters.getListaDados().length; cual++)
 		{
-			imagenDado = new ImageIcon(getClass().getResource("/resources/"+caras[cual]+".jpg"));
+			imagenDado = new ImageIcon(getClass().getResource("/resources/"+modelGeekOutMasters.getListaDados()[cual].getCara()+".jpg"));
 			switch(cual)
 			{
 				case 0:
@@ -286,8 +284,8 @@ public class GUI extends JFrame {
 			{
 				if(objectEvent.getSource()==dado1)
 				{
-					modelGeekOutMasters.getCaras()[1] = modelGeekOutMasters.relanzarDado(modelGeekOutMasters.getListaDados()[1], 1);
-					imagenDado = new ImageIcon(getClass().getResource("/resources/"+modelGeekOutMasters.getCaras()[1]+".jpg"));
+					modelGeekOutMasters.relanzarDado(modelGeekOutMasters.getListaDados()[1]);
+					imagenDado = new ImageIcon(getClass().getResource("/resources/"+modelGeekOutMasters.getListaDados()[1].getCara()+".jpg"));
 					dado1.setIcon(imagenDado);
 					mensaje.setText("Continua...");
 					modelGeekOutMasters.setFlag(5);
@@ -296,7 +294,7 @@ public class GUI extends JFrame {
 			if(objectEvent.getSource()==dado0)
 			{
 				panelDadosUtilizados.add(dado0);
-				modelGeekOutMasters.dadoClickeado(modelGeekOutMasters.getCaras()[0]);
+				modelGeekOutMasters.dadoClickeado(modelGeekOutMasters.getListaDados()[0]);
 				modelGeekOutMasters.determinarJuego();
 				mensaje.setText(modelGeekOutMasters.getEstadoToString());
 				revalidate();

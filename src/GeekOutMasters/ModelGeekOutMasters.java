@@ -7,7 +7,6 @@ package GeekOutMasters;
 
 public class ModelGeekOutMasters {
 	private Dado[] dados;
-	private String[] caras;
 	private String estadoToString;
 	private int flag, estado;
 
@@ -17,17 +16,11 @@ public class ModelGeekOutMasters {
 	public ModelGeekOutMasters()
 	{
 		dados = new Dado[10];
-		dados[0]= new Dado();
-		dados[1]= new Dado();
-		dados[2]= new Dado();
-		dados[3]= new Dado();
-		dados[4]= new Dado();
-		dados[5]= new Dado();
-		dados[6]= new Dado();
-		dados[7]= new Dado();
-		dados[8]= new Dado();
-		dados[9]= new Dado();
-		caras = new String[10];
+
+		for (int i = 0; i < dados.length; i++) {
+			dados[i] = new Dado();
+		}
+
 		flag=5;
 		estado=5;
 	}
@@ -37,21 +30,11 @@ public class ModelGeekOutMasters {
 	 */
 	public void lanzarDado()
 	{
-		for(int cual=0; cual<10; cual++)
-		{
-			caras[cual] = dados[cual].getCara();
+		for(int cual=0; cual<10; cual++) {
+			dados[cual].setCara();
 		}
-		caras[0] = "meeple";
-	}
 
-	/**
-	 * Retorna el valor de las caras de los dados
-	 * @return caras
-	 */
-
-	public String[] getCaras()
-	{
-		return caras;
+		dados[0].setCara(1);
 	}
 
 	/**
@@ -92,18 +75,18 @@ public class ModelGeekOutMasters {
 	/**
 	 * Determina la cara del dado clickeado
 	 */
-	public void dadoClickeado(String cara)
+	public void dadoClickeado(Dado dado)
 	{
-		if(cara=="meeple")
+		if(dado.getCara()=="meeple")
 		{
 			flag=0;
 		}
 	}
 
-	public String relanzarDado(Dado dado, int cual)
+	public String relanzarDado(Dado dado)
 	{
-		caras[cual] = dado.getCara();
-		return caras[cual];
+		dado.setCara();
+		return dado.getCara();
 	}
 
 	/**

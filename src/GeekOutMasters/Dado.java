@@ -17,6 +17,7 @@ import java.util.Random;
 public class Dado
 {
 	private String cara;
+	private int numeroCara;
 
 	/**
 	 * Method that generate an random value to cara
@@ -24,34 +25,36 @@ public class Dado
 	 */
 	public String getCara()
 	{
-		int numeroCara;
+		switch (numeroCara){
+			case 1:
+				return "meeple";
+
+			case 2:
+				return "dragon";
+
+			case 3:
+				return "corazon";
+
+			case 4:
+				return "cohete";
+
+			case 5:
+				return "superHeroe";
+
+			case 6:
+				return "42";
+
+			default:
+				return "";
+		}
+	}
+
+	public void setCara(){
 		Random aleatorio = new Random();
 		numeroCara = aleatorio.nextInt(6)+1;
+	}
 
-		if(numeroCara==1)
-		{
-			return "meeple";
-		}
-		if(numeroCara==2)
-		{
-			return "dragon";
-		}
-		if(numeroCara==3)
-		{
-			return "corazon";
-		}
-		if(numeroCara==4)
-		{
-			return "cohete";
-		}
-		if(numeroCara==5)
-		{
-			return "superHeroe";
-		}
-		if(numeroCara==6)
-		{
-			return "42";
-		}
-		return "";
+	public void setCara(int cara){
+		numeroCara = cara;
 	}
 }
