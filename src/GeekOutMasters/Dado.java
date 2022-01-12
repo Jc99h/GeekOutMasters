@@ -21,6 +21,32 @@ public class Dado {
     private int numeroCara;
     private String panel;
 
+    public static String getCaraPorIndex(int index) {
+        switch (index) {
+            case 1:
+                return "meeple";
+
+            case 2:
+                return "dragon";
+
+            case 3:
+                return "corazon";
+
+            case 4:
+                return "cohete";
+
+            case 5:
+                return "superHeroe";
+
+            case 6:
+                return "42";
+
+            default:
+                System.out.println("error");
+                return "failed";
+        }
+    }
+
     /**
      * Method that generate an random value to cara
      *

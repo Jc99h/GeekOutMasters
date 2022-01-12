@@ -6,6 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
  * This class is used for ...
@@ -29,7 +33,7 @@ public class GUI extends JFrame {
             "6) Los 42 nos permiten ganar puntos\n" +
             "El juego está compuesto por: 10 dados de Geek Out\n" +
             "1 ayuda memoria, 1 Tarjeta de puntuación.";
-
+    public boolean lanzandoDado = false;
     private Header headerProject;
     private JLabel[] labelDados;
     private JLabel marcadorDePuntaje;
@@ -67,6 +71,33 @@ public class GUI extends JFrame {
         });
     }
 
+    public void throwDices(JLabel dadoLabel, Dado dado) {
+        lanzandoDado = true;
+        int fps = 200;
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            int miliseconds = fps;
+            Random random = new Random();
+            int randomFace;
+
+            @Override
+            public void run() {
+
+                randomFace = random.nextInt(6) + 1;
+                dadoLabel.setIcon(new ImageIcon(getClass().getResource("/resources/" + Dado.getCaraPorIndex(randomFace) + ".jpg")));
+
+                if (miliseconds == fps * 10) {
+                    dadoLabel.setIcon(new ImageIcon(getClass().getResource("/resources/" + dado.getCara() + ".jpg")));
+                    lanzandoDado = false;
+                    timer.cancel();
+                }
+
+                miliseconds += fps;
+            }
+
+        }, 0, fps);
+    }
+
     /**
      * This method is used to set up the default JComponent Configuration,
      * create Listener and control Objects used for the GUI class
@@ -92,8 +123,7 @@ public class GUI extends JFrame {
 
         //setting up dice images
         for (int cual = 0; cual < modelGeekOutMasters.getListaDados().length; cual++) {
-            imagenDado = new ImageIcon(getClass().getResource("/resources/" + modelGeekOutMasters.getListaDados()[cual].getCara() + ".jpg"));
-            labelDados[cual].setIcon(imagenDado);
+            throwDices(labelDados[cual], modelGeekOutMasters.getListaDados()[cual]);
         }
 
 
@@ -215,6 +245,7 @@ public class GUI extends JFrame {
         constraints.anchor = GridBagConstraints.CENTER;
         this.add(mensaje, constraints);
 
+
     }
 
     /**
@@ -235,6 +266,8 @@ public class GUI extends JFrame {
 
         @Override
         public void mouseClicked(MouseEvent objectEvent) {
+            if (lanzandoDado) return;
+
             if (modelGeekOutMasters.getFlag() == 0) {
 
                 for (int i = 0; i < labelDados.length; i++) {
@@ -274,8 +307,7 @@ public class GUI extends JFrame {
             switch (modelGeekOutMasters.getFlag()) {
                 case 0:
                     modelGeekOutMasters.relanzarDado(modelGeekOutMasters.getListaDados()[index]);
-                    imagenDado = new ImageIcon(getClass().getResource("/resources/" + modelGeekOutMasters.getListaDados()[index].getCara() + ".jpg"));
-                    labelDados[index].setIcon(imagenDado);
+                    throwDices(labelDados[index], modelGeekOutMasters.getListaDados()[index]);
                     mensaje.setText("Continua...");
                     modelGeekOutMasters.setFlag(5);
                     break;
