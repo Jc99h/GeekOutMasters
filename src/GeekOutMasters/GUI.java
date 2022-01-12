@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 /**
  * This class is used for ...
  * @autor Camilo Ordoñez 1827625-2711 juan.ordonez.hurtado@correounivalle.edu.co
+ * @author Danny Lopez 1941453-2711 danny.cardenas@correounivalle.edu.co
  * @version @version v.1.0.0 date:10/12/2021
  */
 public class GUI extends JFrame {

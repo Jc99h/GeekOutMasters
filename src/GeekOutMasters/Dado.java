@@ -11,6 +11,7 @@ import java.util.Random;
  * 			5. superHeroe
  * 			6. 42
  * @author Camilo Ordoñez 1827625-2711 juan.ordonez.hurtado@correounivalle.edu.co
+ * @author Danny Lopez 1941453-2711 danny.cardenas@correounivalle.edu.co
  * @version v.1.0.0 date 09/01/2022
  */
 
