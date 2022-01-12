@@ -19,6 +19,7 @@ public class Dado
 {
 	private String cara;
 	private int numeroCara;
+	private String panel;
 
 	/**
 	 * Method that generate an random value to cara
@@ -57,5 +58,13 @@ public class Dado
 
 	public void setCara(int cara){
 		numeroCara = cara;
+	}
+
+	public void setPanel(String panel){
+		this.panel = panel;
+	}
+
+	public String getPanel(){
+		return panel;
 	}
 }

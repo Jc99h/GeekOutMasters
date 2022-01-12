@@ -29,7 +29,7 @@ public class ModelGeekOutMasters {
 	/**
 	 * Establece la cara del dado
 	 */
-	public void lanzarDado()
+	public void initDados()
 	{
 		for(int cual=0; cual<10; cual++) {
 			dados[cual].setCara();

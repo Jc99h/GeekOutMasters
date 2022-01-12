@@ -30,8 +30,9 @@ public class GUI extends JFrame {
 																							"1 ayuda memoria, 1 Tarjeta de puntuación.";
 
 	private Header headerProject;
-	private JLabel  dado0, dado1, dado2, dado3, dado4, dado5, dado6, dado7, dado8, dado9, marcadorDePuntaje;
-  private JButton ayuda, salir, jugar;
+	private JLabel[] labelDados;
+	private JLabel marcadorDePuntaje;
+  	private JButton ayuda, salir, jugar;
 	private JPanel panelDadosInactivos, panelDadosUtilizados, panelDadosActivos, panelMarcadorDePuntaje;
 	private ImageIcon imagenDado, imagenMarcadorDePuntaje;
 	private JTextArea mensaje, numeroRonda, numeroPuntaje;
@@ -67,65 +68,20 @@ public class GUI extends JFrame {
 		modelGeekOutMasters = new ModelGeekOutMasters();
 
 		//Se crean los dados iniciales
-		dado0 = new JLabel();
-		dado1 = new JLabel();
-		dado2 = new JLabel();
-		dado3 = new JLabel();
-		dado4 = new JLabel();
-		dado5 = new JLabel();
-		dado6 = new JLabel();
-		dado7 = new JLabel();
-		dado8 = new JLabel();
-		dado9 = new JLabel();
+		labelDados = new JLabel[10];
 
-		dado0.addMouseListener(escucha);
-		dado1.addMouseListener(escucha);
-		dado2.addMouseListener(escucha);
-		dado3.addMouseListener(escucha);
-		dado4.addMouseListener(escucha);
-		dado5.addMouseListener(escucha);
-		dado6.addMouseListener(escucha);
-		dado7.addMouseListener(escucha);
-		dado8.addMouseListener(escucha);
-		dado9.addMouseListener(escucha);
+		for (int i = 0; i < labelDados.length; i++) {
+			labelDados[i] = new JLabel();
+			labelDados[i].addMouseListener(escucha);
+		}
 
-		modelGeekOutMasters.lanzarDado();
+		modelGeekOutMasters.initDados();
+
+		//setting up dice images
 		for(int cual=0; cual<modelGeekOutMasters.getListaDados().length; cual++)
 		{
 			imagenDado = new ImageIcon(getClass().getResource("/resources/"+modelGeekOutMasters.getListaDados()[cual].getCara()+".jpg"));
-			switch(cual)
-			{
-				case 0:
-								dado0.setIcon(imagenDado);
-								break;
-				case 1:
-								dado1.setIcon(imagenDado);
-								break;
-				case 2:
-								dado2.setIcon(imagenDado);
-								break;
-				case 3:
-								dado3.setIcon(imagenDado);
-								break;
-				case 4:
-								dado4.setIcon(imagenDado);
-								break;
-				case 5:
-								dado5.setIcon(imagenDado);
-								break;
-				case 6:
-								dado6.setIcon(imagenDado);
-								break;
-				case 7:
-								dado7.setIcon(imagenDado);
-								break;
-				case 8:
-								dado8.setIcon(imagenDado);
-								break;
-				case 9:
-								dado9.setIcon(imagenDado);
-								break;
-			}
+			labelDados[cual].setIcon(imagenDado);
 		}
 
 
@@ -181,9 +137,12 @@ public class GUI extends JFrame {
 		panelDadosInactivos = new JPanel();
 		panelDadosInactivos.setPreferredSize(new Dimension(250,200));
 		panelDadosInactivos.setBorder(BorderFactory.createTitledBorder("Dados Inactivos"));
-		panelDadosInactivos.add(dado7);
-		panelDadosInactivos.add(dado8);
-		panelDadosInactivos.add(dado9);
+
+		for (int i = 7; i < 10; i++) {
+			panelDadosInactivos.add(labelDados[i]);
+			modelGeekOutMasters.getListaDados()[i].setPanel("inactivo");
+		}
+
 		constraints.gridx=0;
 		constraints.gridy=2;
 		constraints.gridwidth=2;
@@ -204,13 +163,12 @@ public class GUI extends JFrame {
 		panelDadosActivos = new JPanel();
 		panelDadosActivos.setPreferredSize(new Dimension(250,200));
 		panelDadosActivos.setBorder(BorderFactory.createTitledBorder("Dados Activos"));
-		panelDadosActivos.add(dado0);
-		panelDadosActivos.add(dado1);
-		panelDadosActivos.add(dado2);
-		panelDadosActivos.add(dado3);
-		panelDadosActivos.add(dado4);
-		panelDadosActivos.add(dado5);
-		panelDadosActivos.add(dado6);
+
+		for (int i = 0; i < 7; i++) {
+			panelDadosActivos.add(labelDados[i]);
+			modelGeekOutMasters.getListaDados()[i].setPanel("activo");
+		}
+
 		constraints.gridx=0;
 		constraints.gridy=3;
 		constraints.gridwidth=2;
@@ -283,18 +241,18 @@ public class GUI extends JFrame {
 		{
 			if(modelGeekOutMasters.getFlag()==0)
 			{
-				if(objectEvent.getSource()==dado1)
+				if(objectEvent.getSource()==labelDados[1])
 				{
 					modelGeekOutMasters.relanzarDado(modelGeekOutMasters.getListaDados()[1]);
 					imagenDado = new ImageIcon(getClass().getResource("/resources/"+modelGeekOutMasters.getListaDados()[1].getCara()+".jpg"));
-					dado1.setIcon(imagenDado);
+					labelDados[1].setIcon(imagenDado);
 					mensaje.setText("Continua...");
 					modelGeekOutMasters.setFlag(5);
 				}
 			}
-			if(objectEvent.getSource()==dado0)
+			if(objectEvent.getSource()==labelDados[0])
 			{
-				panelDadosUtilizados.add(dado0);
+				panelDadosUtilizados.add(labelDados[0]);
 				modelGeekOutMasters.dadoClickeado(modelGeekOutMasters.getListaDados()[0]);
 				modelGeekOutMasters.determinarJuego();
 				mensaje.setText(modelGeekOutMasters.getEstadoToString());
