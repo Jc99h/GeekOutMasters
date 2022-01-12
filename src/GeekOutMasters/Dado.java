@@ -47,7 +47,8 @@ public class Dado
 				return "42";
 
 			default:
-				return "";
+				System.out.println("error");
+				return "failed";
 		}
 	}
 

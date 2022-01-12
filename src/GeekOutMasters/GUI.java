@@ -261,6 +261,25 @@ public class GUI extends JFrame {
 			}
 		}
 
+		public void activarDado(Dado dado, int index){
+			if (dado.getCara() == "42") return;
+
+			panelDadosActivos.remove(labelDados[index]);
+			panelDadosUtilizados.add(labelDados[index]);
+			modelGeekOutMasters.dadoClickeado(dado);
+			modelGeekOutMasters.determinarJuego();
+			mensaje.setText(modelGeekOutMasters.getEstadoToString());
+
+			switch (dado.getCara()){
+				case "meeple":
+
+
+			}
+
+			revalidate();
+			repaint();
+		}
+
 		@Override
 		public void mousePressed(MouseEvent objectEvent)
 		{
