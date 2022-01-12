@@ -239,14 +239,18 @@ public class GUI extends JFrame {
 
                 for (int i = 0; i < labelDados.length; i++) {
                     if (objectEvent.getSource() == labelDados[i]) {
-                        efectoDado(modelGeekOutMasters.getListaDados()[i], i);
+                        if (modelGeekOutMasters.getListaDados()[i].getPanel() == "activo") {
+                            efectoDado(modelGeekOutMasters.getListaDados()[i], i);
+                        }
                     }
                 }
             } else {
 
                 for (int i = 0; i < labelDados.length; i++) {
                     if (objectEvent.getSource() == labelDados[i]) {
-                        activarDado(modelGeekOutMasters.getListaDados()[i], i);
+                        if (modelGeekOutMasters.getListaDados()[i].getPanel() == "activo") {
+                            activarDado(modelGeekOutMasters.getListaDados()[i], i);
+                        }
                         break;
                     }
                 }
@@ -258,6 +262,7 @@ public class GUI extends JFrame {
 
             panelDadosActivos.remove(labelDados[index]);
             panelDadosUtilizados.add(labelDados[index]);
+            modelGeekOutMasters.getListaDados()[index].setPanel("utilizado");
             modelGeekOutMasters.dadoClickeado(dado);
             modelGeekOutMasters.determinarJuego();
             mensaje.setText(modelGeekOutMasters.getEstadoToString());

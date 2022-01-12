@@ -94,6 +94,9 @@ public class ModelGeekOutMasters {
             case 0:
                 estadoToString = "Seleccionaste Meeple, ahora puedes volver a lanzar uno de los dados activos";
                 break;
+            default:
+                estadoToString = "no setteado";
+                break;
         }
         return estadoToString;
     }
