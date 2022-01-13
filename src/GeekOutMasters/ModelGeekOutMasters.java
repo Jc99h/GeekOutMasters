@@ -21,8 +21,8 @@ public class ModelGeekOutMasters {
             dados[i] = new Dado();
         }
 
-        flag = 5;
-        estado = 5;
+        flag = 0;
+        estado = 0;
     }
 
     /**
@@ -32,8 +32,6 @@ public class ModelGeekOutMasters {
         for (int cual = 0; cual < 10; cual++) {
             dados[cual].setCara();
         }
-
-        dados[0].setCara(1);
     }
 
     /**
@@ -65,14 +63,17 @@ public class ModelGeekOutMasters {
      * 1. Estado Meeple, le indica al jugador que relance un dado del los dados activos
      */
     public void determinarJuego() {
-        if (flag == 0) {
-            estado = 0;
+        if (flag == 1) {
+            estado = 1;
         }
         if (flag == 3) {
             estado = 3;
         }
         if (flag == 4) {
             estado = 4;
+        }
+        if (flag == 5) {
+            estado = 5;
         }
     }
 
@@ -81,11 +82,13 @@ public class ModelGeekOutMasters {
      */
     public void dadoClickeado(Dado dado) {
         if (dado.getCara() == "meeple") {
-            flag = 0;
+            flag = 1;
         } else if (dado.getCara() == "corazon") {
             flag = 3;
         } else if (dado.getCara() == "cohete") {
             flag = 4;
+        } else if (dado.getCara() == "superHeroe") {
+            flag = 5;
         }
     }
 
@@ -101,7 +104,7 @@ public class ModelGeekOutMasters {
      */
     public String getEstadoToString() {
         switch (estado) {
-            case 0:
+            case 1:
                 estadoToString = "Seleccionaste Meeple, ahora puedes volver a lanzar uno de los dados activos";
                 break;
             case 3:
@@ -110,6 +113,10 @@ public class ModelGeekOutMasters {
             case 4:
                 estadoToString = "Seleccionaste Cohete, ahora puedes enviar un dado no usado de la seccion de \n" + "activos a la seccion de inactivos";
                 break;
+            case 5:
+                estadoToString = "Seleccionaste Super Herore, ahora puedes voltear un dado de la seccion de activos \n" + "y colocarlo en su cara opuesta";
+                break;
+
             default:
                 estadoToString = "no setteado";
                 break;

@@ -20,19 +20,7 @@ import java.util.TimerTask;
  */
 public class GUI extends JFrame {
 
-    private static final String MENSAJE_INICIO = "El objetivo de este juego es conseguir la mayor cantidad\n" +
-            "de puntos juntando dados cuya cara visible es la cara 42.\n" +
-            "Geek Out Masters no es solo suerte, también importa la\n" +
-            "estrategia ya que una vez que se lanzan los dados TODAS las\n" +
-            "caras deberán ejecutarse:\n" +
-            "1) Los Meeples permiten relanzar un dado activo\n" +
-            "2) Las Naves Espaciales pasan un dado al area de inactivos\n" +
-            "3) Los Dragones causaran la perdida del juego si no hay mas acciones disponibles\n" +
-            "4) Los Superhéroes dan vuelta un dado\n" +
-            "5) Los Corazones nos permitiran lanzar un dado del area inactivos\n" +
-            "6) Los 42 nos permiten ganar puntos\n" +
-            "El juego está compuesto por: 10 dados de Geek Out\n" +
-            "1 ayuda memoria, 1 Tarjeta de puntuación.";
+    private static final String MENSAJE_INICIO = "El objetivo de este juego es conseguir la mayor cantidad\n" + "de puntos juntando dados cuya cara visible es la cara 42.\n" + "Geek Out Masters no es solo suerte, también importa la\n" + "estrategia ya que una vez que se lanzan los dados TODAS las\n" + "caras deberán ejecutarse:\n" + "1) Los Meeples permiten relanzar un dado activo\n" + "2) Las Naves Espaciales pasan un dado al area de inactivos\n" + "3) Los Dragones causaran la perdida del juego si no hay mas acciones disponibles\n" + "4) Los Superhéroes dan vuelta un dado\n" + "5) Los Corazones nos permitiran lanzar un dado del area inactivos\n" + "6) Los 42 nos permiten ganar puntos\n" + "El juego está compuesto por: 10 dados de Geek Out\n" + "1 ayuda memoria, 1 Tarjeta de puntuación.";
     public boolean lanzandoDado = false;
     private Header headerProject;
     private JLabel[] labelDados;
@@ -233,10 +221,7 @@ public class GUI extends JFrame {
 
         mensaje = new JTextArea(5, 20);
         mensaje.setBorder(BorderFactory.createTitledBorder("Mensajes:"));
-        mensaje.setText("Empieza el juego, intenta terminar cada ronda con dados 42.\n" +
-                "Recuerda que debes activar todos los dados del panel de dados activos\n" +
-                "Buena suerte!\n" +
-                "Si necesitas ayuda da click en el boton '?'.");
+        mensaje.setText("Empieza el juego, intenta terminar cada ronda con dados 42.\n" + "Recuerda que debes activar todos los dados del panel de dados activos\n" + "Buena suerte!\n" + "Si necesitas ayuda da click en el boton '?'.");
         mensaje.setEditable(false);
         constraints.gridx = 0;
         constraints.gridy = 4;
@@ -268,7 +253,7 @@ public class GUI extends JFrame {
         public void mouseClicked(MouseEvent objectEvent) {
             if (lanzandoDado) return;
 
-            if (modelGeekOutMasters.getFlag() == 0 || modelGeekOutMasters.getFlag() == 4) {
+            if (modelGeekOutMasters.getFlag() == 1 || modelGeekOutMasters.getFlag() == 4 || modelGeekOutMasters.getFlag() == 5) {
 
                 for (int i = 0; i < labelDados.length; i++) {
                     if (objectEvent.getSource() == labelDados[i]) {
@@ -304,7 +289,7 @@ public class GUI extends JFrame {
 
             panelDadosActivos.remove(labelDados[index]);
             panelDadosUtilizados.add(labelDados[index]);
-            modelGeekOutMasters.getListaDados()[index].setPanel("utilizado");
+            dado.setPanel("utilizado");
             modelGeekOutMasters.dadoClickeado(dado);
             modelGeekOutMasters.determinarJuego();
             mensaje.setText(modelGeekOutMasters.getEstadoToString());
@@ -314,27 +299,52 @@ public class GUI extends JFrame {
 
         public void efectoDado(Dado dado, int index) {
             switch (modelGeekOutMasters.getFlag()) {
-                case 0:
-                    modelGeekOutMasters.relanzarDado(modelGeekOutMasters.getListaDados()[index]);
-                    throwDices(labelDados[index], modelGeekOutMasters.getListaDados()[index]);
+                case 1:
+                    modelGeekOutMasters.relanzarDado(dado);
+                    throwDices(labelDados[index], dado);
                     break;
                 case 3:
                     panelDadosInactivos.remove(labelDados[index]);
                     panelDadosActivos.add(labelDados[index]);
-                    modelGeekOutMasters.getListaDados()[index].setPanel("activo");
+                    dado.setPanel("activo");
 
-                    modelGeekOutMasters.relanzarDado(modelGeekOutMasters.getListaDados()[index]);
-                    throwDices(labelDados[index], modelGeekOutMasters.getListaDados()[index]);
+                    modelGeekOutMasters.relanzarDado(dado);
+                    throwDices(labelDados[index], dado);
                     break;
                 case 4:
                     panelDadosActivos.remove(labelDados[index]);
                     panelDadosInactivos.add(labelDados[index]);
-                    modelGeekOutMasters.getListaDados()[index].setPanel("inactivo");
+                    dado.setPanel("inactivo");
                     break;
+                case 5:
+                    switch (dado.getCara()) {
+                        case "meeple":
+                            dado.setCara("cohete");
+                            break;
+                        case "cohete":
+                            dado.setCara("meeple");
+                            break;
+                        case "corazon":
+                            dado.setCara("42");
+                            break;
+                        case "42":
+                            dado.setCara("corazon");
+                            break;
+                        case "superHeroe":
+                            dado.setCara("dragon");
+                            break;
+                        case "dragon":
+                            dado.setCara("superHeroe");
+                            break;
+                    }
+
+                    labelDados[index].setIcon(new ImageIcon(getClass().getResource("/resources/" + dado.getCara() + ".jpg")));
+                    break;
+
             }
 
             mensaje.setText("Continua...");
-            modelGeekOutMasters.setFlag(5);
+            modelGeekOutMasters.setFlag(0);
             revalidate();
             repaint();
         }

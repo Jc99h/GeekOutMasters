@@ -82,6 +82,32 @@ public class Dado {
         numeroCara = cara;
     }
 
+    public void setCara(String cara) {
+        switch (cara) {
+            case "meeple":
+                numeroCara = 1;
+                break;
+            case "dragon":
+                numeroCara = 2;
+                break;
+            case "corazon":
+                numeroCara = 3;
+                break;
+            case "cohete":
+                numeroCara = 4;
+                break;
+            case "superHeroe":
+                numeroCara = 5;
+                break;
+            case "42":
+                numeroCara = 6;
+                break;
+            default:
+                System.out.println("fallo set cara por string");
+                break;
+        }
+    }
+
     public void setCara() {
         Random aleatorio = new Random();
         numeroCara = aleatorio.nextInt(6) + 1;
