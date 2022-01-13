@@ -277,6 +277,19 @@ public class GUI extends JFrame {
                         }
                     }
                 }
+            }
+            if (modelGeekOutMasters.getFlag() == 3) {
+
+                for (int i = 0; i < labelDados.length; i++) {
+                    if (objectEvent.getSource() == labelDados[i]) {
+                        if (modelGeekOutMasters.getListaDados()[i].getPanel() == "inactivo") {
+                            panelDadosInactivos.remove(labelDados[i]);
+                            panelDadosActivos.add(labelDados[i]);
+                            modelGeekOutMasters.getListaDados()[i].setPanel("activo");
+                            efectoDado(modelGeekOutMasters.getListaDados()[i], i);
+                        }
+                    }
+                }
             } else {
 
                 for (int i = 0; i < labelDados.length; i++) {
@@ -311,6 +324,13 @@ public class GUI extends JFrame {
                     mensaje.setText("Continua...");
                     modelGeekOutMasters.setFlag(5);
                     break;
+                case 3:
+                    modelGeekOutMasters.relanzarDado(modelGeekOutMasters.getListaDados()[index]);
+                    throwDices(labelDados[index], modelGeekOutMasters.getListaDados()[index]);
+                    mensaje.setText("Continua...");
+                    modelGeekOutMasters.setFlag(5);
+                    break;
+
             }
 
             revalidate();

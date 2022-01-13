@@ -68,6 +68,9 @@ public class ModelGeekOutMasters {
         if (flag == 0) {
             estado = 0;
         }
+        if (flag == 3) {
+            estado = 3;
+        }
     }
 
     /**
@@ -76,6 +79,9 @@ public class ModelGeekOutMasters {
     public void dadoClickeado(Dado dado) {
         if (dado.getCara() == "meeple") {
             flag = 0;
+        }
+        if (dado.getCara() == "corazon") {
+            flag = 3;
         }
     }
 
@@ -93,6 +99,9 @@ public class ModelGeekOutMasters {
         switch (estado) {
             case 0:
                 estadoToString = "Seleccionaste Meeple, ahora puedes volver a lanzar uno de los dados activos";
+                break;
+            case 3:
+                estadoToString = "Seleccionaste Corazon, ahora puedes lanzar uno de los dados del panel inactivos";
                 break;
             default:
                 estadoToString = "no setteado";
