@@ -268,7 +268,7 @@ public class GUI extends JFrame {
         public void mouseClicked(MouseEvent objectEvent) {
             if (lanzandoDado) return;
 
-            if (modelGeekOutMasters.getFlag() == 0) {
+            if (modelGeekOutMasters.getFlag() == 0 || modelGeekOutMasters.getFlag() == 4) {
 
                 for (int i = 0; i < labelDados.length; i++) {
                     if (objectEvent.getSource() == labelDados[i]) {
@@ -277,15 +277,11 @@ public class GUI extends JFrame {
                         }
                     }
                 }
-            }
-            if (modelGeekOutMasters.getFlag() == 3) {
+            } else if (modelGeekOutMasters.getFlag() == 3) {
 
                 for (int i = 0; i < labelDados.length; i++) {
                     if (objectEvent.getSource() == labelDados[i]) {
                         if (modelGeekOutMasters.getListaDados()[i].getPanel() == "inactivo") {
-                            panelDadosInactivos.remove(labelDados[i]);
-                            panelDadosActivos.add(labelDados[i]);
-                            modelGeekOutMasters.getListaDados()[i].setPanel("activo");
                             efectoDado(modelGeekOutMasters.getListaDados()[i], i);
                         }
                     }
@@ -296,8 +292,8 @@ public class GUI extends JFrame {
                     if (objectEvent.getSource() == labelDados[i]) {
                         if (modelGeekOutMasters.getListaDados()[i].getPanel() == "activo") {
                             activarDado(modelGeekOutMasters.getListaDados()[i], i);
+                            break;
                         }
-                        break;
                     }
                 }
             }
@@ -321,18 +317,24 @@ public class GUI extends JFrame {
                 case 0:
                     modelGeekOutMasters.relanzarDado(modelGeekOutMasters.getListaDados()[index]);
                     throwDices(labelDados[index], modelGeekOutMasters.getListaDados()[index]);
-                    mensaje.setText("Continua...");
-                    modelGeekOutMasters.setFlag(5);
                     break;
                 case 3:
+                    panelDadosInactivos.remove(labelDados[index]);
+                    panelDadosActivos.add(labelDados[index]);
+                    modelGeekOutMasters.getListaDados()[index].setPanel("activo");
+
                     modelGeekOutMasters.relanzarDado(modelGeekOutMasters.getListaDados()[index]);
                     throwDices(labelDados[index], modelGeekOutMasters.getListaDados()[index]);
-                    mensaje.setText("Continua...");
-                    modelGeekOutMasters.setFlag(5);
                     break;
-
+                case 4:
+                    panelDadosActivos.remove(labelDados[index]);
+                    panelDadosInactivos.add(labelDados[index]);
+                    modelGeekOutMasters.getListaDados()[index].setPanel("inactivo");
+                    break;
             }
 
+            mensaje.setText("Continua...");
+            modelGeekOutMasters.setFlag(5);
             revalidate();
             repaint();
         }
