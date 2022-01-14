@@ -5,10 +5,10 @@ import java.util.Random;
 /**
  * Clase dado genera un dado aleatorio entre (meeple, dragon, corazon, cohete, super heroe, 42)
  * 1. meeple
- * 2. dragon
+ * 2. superHeroe
  * 3. corazon
  * 4. cohete
- * 5. superHeroe
+ * 5. dragon
  * 6. 42
  *
  * @author Camilo Ordoñez 1827625-2711 juan.ordonez.hurtado@correounivalle.edu.co
@@ -27,7 +27,7 @@ public class Dado {
                 return "meeple";
 
             case 2:
-                return "dragon";
+                return "superHeroe";
 
             case 3:
                 return "corazon";
@@ -36,7 +36,7 @@ public class Dado {
                 return "cohete";
 
             case 5:
-                return "superHeroe";
+                return "dragon";
 
             case 6:
                 return "42";
@@ -58,7 +58,7 @@ public class Dado {
                 return "meeple";
 
             case 2:
-                return "dragon";
+                return "superHeroe";
 
             case 3:
                 return "corazon";
@@ -67,7 +67,7 @@ public class Dado {
                 return "cohete";
 
             case 5:
-                return "superHeroe";
+                return "dragon";
 
             case 6:
                 return "42";
@@ -78,6 +78,11 @@ public class Dado {
         }
     }
 
+    /**
+     * Cambia la cara de un dado, recibe como argumento el numero de la cara
+     * @param cara
+     */
+
     public void setCara(int cara) {
         numeroCara = cara;
     }
@@ -87,7 +92,7 @@ public class Dado {
             case "meeple":
                 numeroCara = 1;
                 break;
-            case "dragon":
+            case "superHeroe":
                 numeroCara = 2;
                 break;
             case "corazon":
@@ -96,7 +101,7 @@ public class Dado {
             case "cohete":
                 numeroCara = 4;
                 break;
-            case "superHeroe":
+            case "dragon":
                 numeroCara = 5;
                 break;
             case "42":
@@ -113,9 +118,19 @@ public class Dado {
         numeroCara = aleatorio.nextInt(6) + 1;
     }
 
+    /**
+     * Retorna el panel donde este el dado
+     * @return
+     */
+
     public String getPanel() {
         return panel;
     }
+
+    /**
+     * Permite cambiar de panel al dado
+     * @param panel
+     */
 
     public void setPanel(String panel) {
         this.panel = panel;
