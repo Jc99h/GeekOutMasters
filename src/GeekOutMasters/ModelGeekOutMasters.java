@@ -2,8 +2,8 @@ package GeekOutMasters;
 
 /**
  * @author Danny Lopez 1941453-2711 danny.cardenas@correounivalle.edu.co
- * @version v.1.0.0 date 09/01/2022
  * @author Camilo Ordoñez 1827625-2711 juan.ordonez.hurtado@correounivalle.edu.co
+ * @version v.1.0.0 date 09/01/2022
  */
 
 public class ModelGeekOutMasters {
@@ -25,7 +25,7 @@ public class ModelGeekOutMasters {
         estado = 0;
         puntajeASumar = 0;
         puntajeTotal = 0;
-        ronda = 0;
+        ronda = 1;
     }
 
     /**
@@ -112,6 +112,7 @@ public class ModelGeekOutMasters {
 
     /**
      * Relanza un dado
+     *
      * @param dado
      * @return
      */
@@ -122,92 +123,64 @@ public class ModelGeekOutMasters {
     }
 
     public boolean rondaFinalizada() {
-        int controlDados=0;
-        int dadosDragon42=0;
-        for(int i = 0; i < dados.length; i++)
-        {
-            if(dados[i].getPanel()=="activo") {
-                if(dados[i].getCara()=="corazon") {
+        int controlDados = 0;
+        int dadosDragon42 = 0;
+        for (int i = 0; i < dados.length; i++) {
+            if (dados[i].getPanel() == "activo") {
+                if (dados[i].getCara() == "corazon") {
                     return false;
                 }
-                if(dados[i].getCara()=="meeple" || dados[i].getCara()=="superHeroe" || dados[i].getCara()=="cohete") {
+                if (dados[i].getCara() == "meeple" || dados[i].getCara() == "superHeroe" || dados[i].getCara() == "cohete") {
                     controlDados++;
                 }
-                if(dados[i].getCara()=="dragon" || dados[i].getCara()=="42") {
+                if (dados[i].getCara() == "dragon" || dados[i].getCara() == "42") {
                     dadosDragon42++;
                 }
             }
         }
-        if(controlDados==0) {
+        if (controlDados == 0) {
             return true;
-        } else if (controlDados==1 && dadosDragon42==0) {
+        } else if (controlDados == 1 && dadosDragon42 == 0) {
             return true;
         }
         return false;
     }
 
     public void calcularPuntaje() {
-        int dadosActivos=0;
-        int controlDragon=0;
-        int control42=0;
-        for(int i = 0; i < dados.length; i++) {
-            if(dados[i].getPanel()=="activo") {
-                if(dados[i].getCara()=="meeple" || dados[i].getCara()=="superHeroe" || dados[i].getCara()=="cohete") {
+        int dadosActivos = 0;
+        int controlDragon = 0;
+        int control42 = 0;
+        for (int i = 0; i < dados.length; i++) {
+            if (dados[i].getPanel() == "activo") {
+                if (dados[i].getCara() == "meeple" || dados[i].getCara() == "superHeroe" || dados[i].getCara() == "cohete") {
                     estado = 5;
                     dadosActivos++;
-                } else if(dados[i].getCara()=="dragon") {
+                } else if (dados[i].getCara() == "dragon") {
                     controlDragon++;
                     dadosActivos++;
-                } else if(dados[i].getCara()=="42") {
+                } else if (dados[i].getCara() == "42") {
                     control42++;
                     dadosActivos++;
                 }
             }
         }
-        if(controlDragon>0 && control42>0) {
+        if (controlDragon > 0 && control42 > 0) {
             estado = 6;
         }
-        if(controlDragon>0 && control42==0) {
+        if (controlDragon > 0 && control42 == 0) {
             puntajeTotal = 0;
             estado = 7;
         }
-        if(controlDragon==0 && control42>0) {
-            switch (control42) {
-                case 1:
-                    puntajeASumar = 1;
-                    break;
-                case 2:
-                    puntajeASumar = 3;
-                    break;
-                case 3:
-                    puntajeASumar = 6;
-                    break;
-                case 4:
-                    puntajeASumar = 10;
-                    break;
-                case 5:
-                    puntajeASumar = 15;
-                    break;
-                case 6:
-                    puntajeASumar = 21;
-                    break;
-                case 7:
-                    puntajeASumar = 28;
-                    break;
-                case 8:
-                    puntajeASumar = 36;
-                    break;
-                case 9:
-                    puntajeASumar = 45;
-                    break;
-                case 10:
-                    puntajeASumar = 55;
-                    break;
+        if (controlDragon == 0 && control42 > 0) {
+            puntajeASumar = 0;
+            for (int i = 0; i < control42; i++) {
+                puntajeASumar += i + 1;
             }
-            puntajeTotal+=puntajeASumar;
+
+            puntajeTotal += puntajeASumar;
             estado = 8;
         }
-        if(dadosActivos==0) {
+        if (dadosActivos == 0) {
             estado = 9;
         }
         ronda++;
@@ -242,11 +215,11 @@ public class ModelGeekOutMasters {
                 estadoToString = "Terminaste solo con cara Dragon, pierdes todos tus puntos acumulados";
                 break;
             case 8:
-                estadoToString = "Felicitaciones, terminaste solo con caras 42, sumaste "+puntajeASumar+" puntos\n"+"En total tienes "+puntajeTotal+" puntos.";
-                puntajeASumar=0;
+                estadoToString = "Felicitaciones, terminaste solo con caras 42, sumaste " + puntajeASumar + " puntos\n" + "En total tienes " + puntajeTotal + " puntos.";
+                puntajeASumar = 0;
                 break;
             case 9:
-                estadoToString = "Ronda terminada, no quedan dados activos.\n"+"En esta ronda no ganas puntos y conservas los ya acumulados";
+                estadoToString = "Ronda terminada, no quedan dados activos.\n" + "En esta ronda no ganas puntos y conservas los ya acumulados";
                 break;
 
             default:

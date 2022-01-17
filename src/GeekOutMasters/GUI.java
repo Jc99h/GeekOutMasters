@@ -15,8 +15,8 @@ import java.util.TimerTask;
  * This class is used for ...
  *
  * @author Danny Lopez 1941453-2711 danny.cardenas@correounivalle.edu.co
- * @version @version v.1.0.0 date:10/12/2021
  * @author Camilo Ordoñez 1827625-2711 juan.ordonez.hurtado@correounivalle.edu.co
+ * @version v.1.0.0 date:10/12/2021
  */
 public class GUI extends JFrame {
 
@@ -107,14 +107,6 @@ public class GUI extends JFrame {
             labelDados[i].addMouseListener(escucha);
         }
 
-        modelGeekOutMasters.initDados();
-
-        //setting up dice images
-        for (int cual = 0; cual < modelGeekOutMasters.getListaDados().length; cual++) {
-            throwDices(labelDados[cual], modelGeekOutMasters.getListaDados()[cual]);
-        }
-
-
         //Set up JComponents
         headerProject = new Header("Mesa Juego Geek Out Masters", Color.BLACK);
         constraints.gridx = 0;
@@ -132,10 +124,9 @@ public class GUI extends JFrame {
         constraints.anchor = GridBagConstraints.LINE_START;
         this.add(ayuda, constraints);
 
-
         numeroRonda = new JTextArea(1, 15);
         numeroRonda.setBorder(BorderFactory.createTitledBorder("Ronda:"));
-        numeroRonda.setText("#"+modelGeekOutMasters.getRonda());
+        numeroRonda.setText("#" + modelGeekOutMasters.getRonda());
         numeroRonda.setEditable(false);
         constraints.gridx = 1;
         constraints.gridy = 1;
@@ -146,7 +137,7 @@ public class GUI extends JFrame {
 
         numeroPuntaje = new JTextArea(1, 15);
         numeroPuntaje.setBorder(BorderFactory.createTitledBorder("Puntaje:"));
-        numeroPuntaje.setText(modelGeekOutMasters.getPuntajeTotal()+" puntos");
+        numeroPuntaje.setText(modelGeekOutMasters.getPuntajeTotal() + " puntos");
         numeroPuntaje.setEditable(false);
         constraints.gridx = 2;
         constraints.gridy = 1;
@@ -168,11 +159,6 @@ public class GUI extends JFrame {
         panelDadosInactivos.setPreferredSize(new Dimension(250, 200));
         panelDadosInactivos.setBorder(BorderFactory.createTitledBorder("Dados Inactivos"));
 
-        for (int i = 7; i < 10; i++) {
-            panelDadosInactivos.add(labelDados[i]);
-            modelGeekOutMasters.getListaDados()[i].setPanel("inactivo");
-        }
-
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridwidth = 2;
@@ -193,11 +179,6 @@ public class GUI extends JFrame {
         panelDadosActivos = new JPanel();
         panelDadosActivos.setPreferredSize(new Dimension(250, 200));
         panelDadosActivos.setBorder(BorderFactory.createTitledBorder("Dados Activos"));
-
-        for (int i = 0; i < 7; i++) {
-            panelDadosActivos.add(labelDados[i]);
-            modelGeekOutMasters.getListaDados()[i].setPanel("activo");
-        }
 
         constraints.gridx = 0;
         constraints.gridy = 3;
@@ -230,7 +211,26 @@ public class GUI extends JFrame {
         constraints.anchor = GridBagConstraints.CENTER;
         this.add(mensaje, constraints);
 
+        initRonda();
+    }
 
+    private void initRonda() {
+        modelGeekOutMasters.initDados();
+
+        //setting up dice images
+        for (int cual = 0; cual < modelGeekOutMasters.getListaDados().length; cual++) {
+            throwDices(labelDados[cual], modelGeekOutMasters.getListaDados()[cual]);
+        }
+
+        for (int i = 0; i < modelGeekOutMasters.getListaDados().length; i++) {
+            if (i < 7) {
+                panelDadosActivos.add(labelDados[i]);
+                modelGeekOutMasters.getListaDados()[i].setPanel("activo");
+            } else {
+                panelDadosInactivos.add(labelDados[i]);
+                modelGeekOutMasters.getListaDados()[i].setPanel("inactivo");
+            }
+        }
     }
 
     /**
@@ -346,12 +346,12 @@ public class GUI extends JFrame {
 
             mensaje.setText("Continua...");
             modelGeekOutMasters.setFlag(0);
-            if(modelGeekOutMasters.rondaFinalizada()==true) {
+            if (modelGeekOutMasters.rondaFinalizada()) {
                 modelGeekOutMasters.calcularPuntaje();
                 mensaje.setText(modelGeekOutMasters.getEstadoToString());
-                numeroPuntaje.setText(modelGeekOutMasters.getPuntajeTotal()+" puntos");
-                numeroRonda.setText("#"+modelGeekOutMasters.getRonda());
-
+                numeroPuntaje.setText(modelGeekOutMasters.getPuntajeTotal() + " puntos");
+                numeroRonda.setText("#" + modelGeekOutMasters.getRonda());
+                initRonda();
             }
             revalidate();
             repaint();
