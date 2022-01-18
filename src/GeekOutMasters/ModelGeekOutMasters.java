@@ -7,6 +7,7 @@ package GeekOutMasters;
  */
 
 public class ModelGeekOutMasters {
+    public boolean juegoTerminado;
     private Dado[] dados;
     private String estadoToString;
     private int flag, estado, puntajeASumar, puntajeTotal, ronda;
@@ -21,6 +22,7 @@ public class ModelGeekOutMasters {
             dados[i] = new Dado();
         }
 
+        juegoTerminado = false;
         flag = 0;
         estado = 0;
         puntajeASumar = 0;
@@ -164,14 +166,11 @@ public class ModelGeekOutMasters {
                 }
             }
         }
-        if (controlDragon > 0 && control42 > 0) {
-            estado = 6;
-        }
-        if (controlDragon > 0 && control42 == 0) {
+
+        if (controlDragon > 0) {
             puntajeTotal = 0;
             estado = 7;
-        }
-        if (controlDragon == 0 && control42 > 0) {
+        } else if (controlDragon == 0 && control42 > 0) {
             puntajeASumar = 0;
             for (int i = 0; i < control42; i++) {
                 puntajeASumar += i + 1;
@@ -179,11 +178,20 @@ public class ModelGeekOutMasters {
 
             puntajeTotal += puntajeASumar;
             estado = 8;
-        }
-        if (dadosActivos == 0) {
+        } else if (dadosActivos == 0) {
             estado = 9;
         }
+
         ronda++;
+
+        if (ronda - 1 >= 6) {
+            juegoTerminado = true;
+        }
+    }
+
+    public void terminarJuego() {
+        if (!juegoTerminado) return;
+
     }
 
     /**
@@ -206,7 +214,7 @@ public class ModelGeekOutMasters {
                 estadoToString = "Seleccionaste Cohete, ahora puedes enviar un dado no usado de la seccion de \n" + "activos a la seccion de inactivos";
                 break;
             case 5:
-                estadoToString = "Ronda terminada, finalizaste con un superHeroe, cohete, o meeple. \n" + "En esta ronda no ganas puntos y conservas los ya acumulados";
+                estadoToString = "Ronda terminada, finalizaste con un super heroe, cohete, o meeple. \n" + "En esta ronda no ganas puntos y conservas los ya acumulados";
                 break;
             case 6:
                 estadoToString = "No se sabe.";
@@ -221,6 +229,8 @@ public class ModelGeekOutMasters {
             case 9:
                 estadoToString = "Ronda terminada, no quedan dados activos.\n" + "En esta ronda no ganas puntos y conservas los ya acumulados";
                 break;
+            case 10:
+
 
             default:
                 estadoToString = "no setteado";
