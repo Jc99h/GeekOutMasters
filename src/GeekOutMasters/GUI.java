@@ -215,6 +215,47 @@ public class GUI extends JFrame {
     }
 
     private void initRonda() {
+//        for (int i = 0; i < labelDados.length; i++) {
+//            panelDadosActivos.remove(labelDados[i]);
+//            panelDadosUtilizados.remove(labelDados[i]);
+//            panelDadosInactivos.remove(labelDados[i]);
+//        }
+//
+//
+//        int fps = 200;
+//        Timer timer = new Timer();
+//        timer.scheduleAtFixedRate(new TimerTask() {
+//            int miliseconds = fps;
+//
+//            @Override
+//            public void run() {
+//                if (miliseconds >= fps * 10) {
+//
+//                    modelGeekOutMasters.initDados();
+//
+//                    //setting up dice images
+//                    for (int cual = 0; cual < modelGeekOutMasters.getListaDados().length; cual++) {
+//                        throwDices(labelDados[cual], modelGeekOutMasters.getListaDados()[cual]);
+//                    }
+//
+//                    for (int i = 0; i < modelGeekOutMasters.getListaDados().length; i++) {
+//                        if (i < 7) {
+//                            panelDadosActivos.add(labelDados[i]);
+//                            modelGeekOutMasters.getListaDados()[i].setPanel("activo");
+//                        } else {
+//                            panelDadosInactivos.add(labelDados[i]);
+//                            modelGeekOutMasters.getListaDados()[i].setPanel("inactivo");
+//                        }
+//                    }
+//
+//                    timer.cancel();
+//                }
+//
+//                miliseconds += fps;
+//            }
+//
+//        }, 0, fps);
+
         modelGeekOutMasters.initDados();
 
         //setting up dice images
@@ -272,7 +313,7 @@ public class GUI extends JFrame {
                         }
                     }
                 }
-            } else {
+            } else if (modelGeekOutMasters.getFlag() == 0) {
 
                 for (int i = 0; i < labelDados.length; i++) {
                     if (objectEvent.getSource() == labelDados[i]) {
@@ -329,6 +370,7 @@ public class GUI extends JFrame {
                     labelDados[index].setIcon(new ImageIcon(getClass().getResource("/resources/" + dado.getCara() + ".jpg")));
                     break;
                 case 3:
+                    if (panelDadosInactivos.getComponentCount() == 0) break;
                     panelDadosInactivos.remove(labelDados[index]);
                     panelDadosActivos.add(labelDados[index]);
                     dado.setPanel("activo");
@@ -347,12 +389,21 @@ public class GUI extends JFrame {
             mensaje.setText("Continua...");
             modelGeekOutMasters.setFlag(0);
             if (modelGeekOutMasters.rondaFinalizada()) {
+
                 modelGeekOutMasters.calcularPuntaje();
-                mensaje.setText(modelGeekOutMasters.getEstadoToString());
                 numeroPuntaje.setText(modelGeekOutMasters.getPuntajeTotal() + " puntos");
                 numeroRonda.setText("#" + modelGeekOutMasters.getRonda());
-                initRonda();
+                if (modelGeekOutMasters.juegoTerminado) {
+                    modelGeekOutMasters.setFlag(10);
+                }
+                mensaje.setText(modelGeekOutMasters.getEstadoToString());
+                revalidate();
+                repaint();
+
+
+                if (!modelGeekOutMasters.juegoTerminado) initRonda();
             }
+
             revalidate();
             repaint();
         }

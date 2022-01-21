@@ -182,16 +182,12 @@ public class ModelGeekOutMasters {
             estado = 9;
         }
 
-        ronda++;
-
-        if (ronda - 1 >= 6) {
+        if (ronda >= 5) {
             juegoTerminado = true;
+            return;
         }
-    }
 
-    public void terminarJuego() {
-        if (!juegoTerminado) return;
-
+        ronda++;
     }
 
     /**
@@ -200,6 +196,7 @@ public class ModelGeekOutMasters {
      * @return estadoToString
      */
     public String getEstadoToString() {
+        System.out.println(estado);
         switch (estado) {
             case 1:
                 estadoToString = "Seleccionaste Meeple, ahora puedes volver a lanzar uno de los dados activos";
@@ -230,10 +227,16 @@ public class ModelGeekOutMasters {
                 estadoToString = "Ronda terminada, no quedan dados activos.\n" + "En esta ronda no ganas puntos y conservas los ya acumulados";
                 break;
             case 10:
-
+                estadoToString = "Partida terminada, has terminado con " + puntajeTotal + " puntos. \n";
+                if (puntajeTotal >= 30) {
+                    estadoToString += "Has ganado.";
+                } else {
+                    estadoToString += "Has perdido.";
+                }
+                break;
 
             default:
-                estadoToString = "no setteado";
+                estadoToString = "no setteado" + estado;
                 break;
         }
         return estadoToString;
