@@ -25,9 +25,9 @@ public class GUI extends JFrame {
     private Header headerProject;
     private JLabel[] labelDados;
     private JLabel marcadorDePuntaje;
-    private JButton ayuda, salir, jugar;
+    private JButton ayuda, salir;
     private JPanel panelDadosInactivos, panelDadosUtilizados, panelDadosActivos, panelMarcadorDePuntaje;
-    private ImageIcon imagenDado, imagenMarcadorDePuntaje;
+    private ImageIcon imagenMarcadorDePuntaje;
     private JTextArea mensaje, numeroRonda, numeroPuntaje;
     private Escucha escucha;
     private ModelGeekOutMasters modelGeekOutMasters;
@@ -326,6 +326,12 @@ public class GUI extends JFrame {
             }
         }
 
+        /**
+         * Clase que activa la funcion del dado al darle click
+         * @param dado
+         * @param index
+         */
+
         public void activarDado(Dado dado, int index) {
             if (dado.getCara() == "42" || dado.getCara() == "dragon") return;
 
@@ -338,6 +344,12 @@ public class GUI extends JFrame {
             revalidate();
             repaint();
         }
+
+        /**
+         * Clase que activa el poder del dado
+         * @param dado
+         * @param index
+         */
 
         public void efectoDado(Dado dado, int index) {
             switch (modelGeekOutMasters.getFlag()) {
@@ -401,7 +413,25 @@ public class GUI extends JFrame {
                 repaint();
 
 
-                if (!modelGeekOutMasters.juegoTerminado) initRonda();
+                if (!modelGeekOutMasters.juegoTerminado) {
+                    initRonda();
+                }
+                else
+                {
+                    int n = JOptionPane.showConfirmDialog(null, modelGeekOutMasters.getEstadoToString() + "\nJugar nuevamente?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+                    if(n==JOptionPane.YES_OPTION)
+                    {
+                        modelGeekOutMasters.jugarNuevamente();
+                        numeroPuntaje.setText(modelGeekOutMasters.getPuntajeTotal() + " puntos");
+                        numeroRonda.setText("#" + modelGeekOutMasters.getRonda());
+                        mensaje.setText("Empieza el juego, intenta terminar cada ronda con dados 42.\n" + "Recuerda que debes activar todos los dados del panel de dados activos\n" + "Buena suerte!\n" + "Si necesitas ayuda da click en el boton '?'.");
+                        initRonda();
+                    }
+                    else
+                    {
+                        System.exit(0);
+                    }
+                }
             }
 
             revalidate();

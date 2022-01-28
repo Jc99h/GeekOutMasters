@@ -39,6 +39,11 @@ public class ModelGeekOutMasters {
         }
     }
 
+    /**
+     * Retorna el numero de la ronda
+     * @return ronda
+     */
+
     public int getRonda() {
         return ronda;
     }
@@ -61,11 +66,21 @@ public class ModelGeekOutMasters {
         return flag;
     }
 
+    /**
+     * Cambia el valor del flag
+     * @param numero
+     */
+
     public void setFlag(int numero) {
 
         flag = numero;
         estado = numero;
     }
+
+    /**
+     * Retorna el valor del puntaje total
+     * @return
+     */
 
     public int getPuntajeTotal() {
         return puntajeTotal;
@@ -124,6 +139,11 @@ public class ModelGeekOutMasters {
         return dado.getCara();
     }
 
+    /**
+     * Clase que determina si la ronda ha finalizado
+     * @return true or false
+     */
+
     public boolean rondaFinalizada() {
         int controlDados = 0;
         int dadosDragon42 = 0;
@@ -147,6 +167,10 @@ public class ModelGeekOutMasters {
         }
         return false;
     }
+
+    /**
+     * Clase que calcula el puntaje
+     */
 
     public void calcularPuntaje() {
         int dadosActivos = 0;
@@ -188,6 +212,25 @@ public class ModelGeekOutMasters {
         }
 
         ronda++;
+    }
+
+    /**
+     * Inicia un nuevo juego
+     */
+    public void jugarNuevamente()
+    {
+        dados = new Dado[10];
+
+        for (int i = 0; i < dados.length; i++) {
+            dados[i] = new Dado();
+        }
+
+        juegoTerminado = false;
+        flag = 0;
+        estado = 0;
+        puntajeASumar = 0;
+        puntajeTotal = 0;
+        ronda = 1;
     }
 
     /**

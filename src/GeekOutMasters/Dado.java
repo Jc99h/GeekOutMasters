@@ -17,7 +17,6 @@ import java.util.Random;
  */
 
 public class Dado {
-    private String cara;
     private int numeroCara;
     private String panel;
 
