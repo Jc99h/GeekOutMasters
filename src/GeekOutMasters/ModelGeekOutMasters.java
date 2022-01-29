@@ -3,8 +3,13 @@ package GeekOutMasters;
 /**
  * @author Danny Lopez 1941453-2711 danny.cardenas@correounivalle.edu.co
  * @author Camilo Ordoñez 1827625-2711 juan.ordonez.hurtado@correounivalle.edu.co
- * @version v.1.0.0 date 09/01/2022
+ * @version v.1.0.0 date 28/01/2022
  */
+
+/**
+ * ModelGeekOutMasters aplica las reglas del juego
+ */
+
 
 public class ModelGeekOutMasters {
     public boolean juegoTerminado;
@@ -129,7 +134,6 @@ public class ModelGeekOutMasters {
 
     /**
      * Relanza un dado
-     *
      * @param dado
      * @return
      */
@@ -215,7 +219,7 @@ public class ModelGeekOutMasters {
     }
 
     /**
-     * Inicia un nuevo juego
+     * Inicia un nuevo juego, establece todos los valores a valores iniciales
      */
     public void jugarNuevamente()
     {
@@ -257,7 +261,7 @@ public class ModelGeekOutMasters {
                 estadoToString = "Ronda terminada, finalizaste con un super heroe, cohete, o meeple. \n" + "En esta ronda no ganas puntos y conservas los ya acumulados";
                 break;
             case 6:
-                estadoToString = "No se sabe.";
+                estadoToString = "";
                 break;
             case 7:
                 estadoToString = "Terminaste solo con cara Dragon, pierdes todos tus puntos acumulados";

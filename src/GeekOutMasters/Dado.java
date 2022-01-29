@@ -13,7 +13,7 @@ import java.util.Random;
  *
  * @author Camilo Ordoñez 1827625-2711 juan.ordonez.hurtado@correounivalle.edu.co
  * @author Danny Lopez 1941453-2711 danny.cardenas@correounivalle.edu.co
- * @version v.1.0.0 date 09/01/2022
+ * @version v.1.0.0 date 28/01/2022
  */
 
 public class Dado {
@@ -47,8 +47,7 @@ public class Dado {
     }
 
     /**
-     * Method that generate an random value to cara
-     *
+     * Method that generate a random value to cara
      * @return number between (1,6)
      */
     public String getCara() {
@@ -78,13 +77,9 @@ public class Dado {
     }
 
     /**
-     * Cambia la cara de un dado, recibe como argumento el numero de la cara
+     * Cambia la cara de un dado, recibe como argumento el string de cara a cambiar
      * @param cara
      */
-
-    public void setCara(int cara) {
-        numeroCara = cara;
-    }
 
     public void setCara(String cara) {
         switch (cara) {
@@ -111,6 +106,10 @@ public class Dado {
                 break;
         }
     }
+
+    /**
+     * Asigna aleatoriamente la cara de un dado
+     */
 
     public void setCara() {
         Random aleatorio = new Random();

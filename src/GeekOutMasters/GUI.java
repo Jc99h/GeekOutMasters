@@ -16,7 +16,7 @@ import java.util.TimerTask;
  *
  * @author Danny Lopez 1941453-2711 danny.cardenas@correounivalle.edu.co
  * @author Camilo Ordoñez 1827625-2711 juan.ordonez.hurtado@correounivalle.edu.co
- * @version v.1.0.0 date:10/12/2021
+ * @version v.1.0.0 date:28/01/2022
  */
 public class GUI extends JFrame {
 
@@ -58,6 +58,12 @@ public class GUI extends JFrame {
             GUI miProjectGUI = new GUI();
         });
     }
+
+    /**
+     * Clase que le da efectos de animacion a los dados
+     * @param dadoLabel
+     * @param dado
+     */
 
     public void throwDices(JLabel dadoLabel, Dado dado) {
         lanzandoDado = true;
@@ -215,46 +221,6 @@ public class GUI extends JFrame {
     }
 
     private void initRonda() {
-//        for (int i = 0; i < labelDados.length; i++) {
-//            panelDadosActivos.remove(labelDados[i]);
-//            panelDadosUtilizados.remove(labelDados[i]);
-//            panelDadosInactivos.remove(labelDados[i]);
-//        }
-//
-//
-//        int fps = 200;
-//        Timer timer = new Timer();
-//        timer.scheduleAtFixedRate(new TimerTask() {
-//            int miliseconds = fps;
-//
-//            @Override
-//            public void run() {
-//                if (miliseconds >= fps * 10) {
-//
-//                    modelGeekOutMasters.initDados();
-//
-//                    //setting up dice images
-//                    for (int cual = 0; cual < modelGeekOutMasters.getListaDados().length; cual++) {
-//                        throwDices(labelDados[cual], modelGeekOutMasters.getListaDados()[cual]);
-//                    }
-//
-//                    for (int i = 0; i < modelGeekOutMasters.getListaDados().length; i++) {
-//                        if (i < 7) {
-//                            panelDadosActivos.add(labelDados[i]);
-//                            modelGeekOutMasters.getListaDados()[i].setPanel("activo");
-//                        } else {
-//                            panelDadosInactivos.add(labelDados[i]);
-//                            modelGeekOutMasters.getListaDados()[i].setPanel("inactivo");
-//                        }
-//                    }
-//
-//                    timer.cancel();
-//                }
-//
-//                miliseconds += fps;
-//            }
-//
-//        }, 0, fps);
 
         modelGeekOutMasters.initDados();
 
